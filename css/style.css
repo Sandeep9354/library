@@ -187,7 +187,12 @@ body {
       border-right-color: transparent;
   }
 }
-
+@media (max-width:510px) {
+  #typing-text-2{
+    position: relative;
+    top: -15px !important;
+  }
+}
 /* Responsive Styling for Mobile */
 @media (max-width: 768px) {
   #typing-text, #typing-text-2 {
@@ -196,10 +201,7 @@ body {
       margin-bottom: 0; /* Ensure no gap */
 
   }
-#typing-text-2{
-  position: relative;
-  top: -15px !important;
-}
+
   #cursor {
       height: 1.2rem; /* Smaller cursor height for mobile */
   }
