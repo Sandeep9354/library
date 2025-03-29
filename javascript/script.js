@@ -164,23 +164,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   startAutoScroll();
 });
-
-function toggleProfilePanel() {
-  const panel = document.getElementById("profilePanel");
-  const overlay = document.getElementById("overlay");
-
-  panel.classList.toggle("open");
-  overlay.classList.toggle("show");
-}
-function showDisplaySettings() {
-  // Hide all other panels inside the sliding panel
-  document.querySelectorAll(".profile-panel-section").forEach((section) => {
-    section.style.display = "none";
-  });
-
-  // Show the display settings panel
-  document.getElementById("display-settings").style.display = "block";
-}
 // Function to open/close sliding panel
 function toggleProfilePanel() {
   const panel = document.getElementById("profile-panel");
@@ -193,49 +176,55 @@ function toggleProfilePanel() {
 function showDisplaySettings() {
   const panelContent = document.getElementById("profile-panel-content");
 
-  // Replace with Display Settings
   panelContent.innerHTML = `
        <button class="close-btn" onclick="toggleProfilePanel()">✖</button>
-<h3 class="panel-title"><a href="#"><i class="fa-solid fa-cogs slide-icon options-icons"></i> Settings</a>
-</h3>
-<div class="profile-links">
-    <div class="setting-item-option">
-        <div class="toggle-container">
-            <label class="toggle-status" id="toggle-status">Light Mode</label>
-            <div class="toggle">
-                <div class="toggle-switch">
-                    <input type="checkbox" id="theme-toggle" onchange="toggleTheme()">
-                    <label for="theme-toggle"></label>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+       <h3 class="panel-title"><a href="#"><i class="fa-solid fa-cogs slide-icon options-icons"></i> Settings</a></h3>
+       <div class="profile-links">
+           <!-- Theme Toggle -->
+           <div class="setting-item-option">
+               <div class="toggle-container">
+                   <label class="toggle-status" id="toggle-status">Light Mode</label>
+                   <div class="toggle">
+                       <div class="toggle-switch">
+                           <input type="checkbox" id="theme-toggle" onchange="toggleTheme()">
+                           <label for="theme-toggle"></label>
+                       </div>
+                   </div>
+               </div>
+           </div>
 
+           <!-- Auto Theme Toggle -->
+           <div class="setting-item-option">
+               <label>
+                   <input type="checkbox" id="auto-theme-toggle" onchange="toggleAutoTheme()"> Auto Theme (Follow System)
+               </label>
+           </div>
 
+         
 
-
-            <a href="#" onclick="showInitialOptions()">
-                <i class="fa-solid fa-arrow-left"></i> Back
-            </a>
-        </div>
+           <a href="#" onclick="showInitialOptions()">
+               <i class="fa-solid fa-arrow-left"></i> Back
+           </a>
+       </div>
     `;
+
+  loadTheme(); // Ensure theme is loaded properly
+  loadLanguage(); // Ensure language is loaded properly
 }
 
 // Function to restore initial options
 function showInitialOptions() {
   const panelContent = document.getElementById("profile-panel-content");
 
-  // Restore the original content
   panelContent.innerHTML = `
         <button class="close-btn" onclick="toggleProfilePanel()">✖</button>
         <div class="profile-header">
             <img src="profile.jpg" alt="User">
-            <h3>John Doe</h3>
-            <p>johndoe@gmail.com</p>
+            <h3 class="">John Doe</h3>
+            <p class="sliding-pannel-mail">johndoe@gmail.com</p>
         </div>
         <div class="profile-links">
-            <a href="#"><i class="fa-solid fa-user"></i> Profile</a>
+            <a href="#" onclick="showProfileSettings()"><i class="fa-solid fa-user""></i> Profile</a>
             <a href="#" onclick="showDisplaySettings()"><i class="fa-solid fa-cogs"></i> Settings</a>
             <a href="#"><i class="fa-solid fa-book"></i> My Books</a>
             <a href="#"><i class="fa-solid fa-sign-out-alt"></i> Logout</a>
@@ -243,48 +232,86 @@ function showInitialOptions() {
     `;
 }
 
+// 🌙 Toggle Light and Dark Mode
 function toggleTheme() {
   const body = document.body;
   const toggleStatus = document.getElementById('toggle-status');
   const themeToggle = document.getElementById('theme-toggle');
 
   if (themeToggle.checked) {
-      body.classList.add('dark-mode');
-      localStorage.setItem('theme', 'dark');
-      toggleStatus.innerHTML = 'Dark Mode';
+    body.classList.add('dark-mode');
+    localStorage.setItem('theme', 'dark');
+    toggleStatus.innerHTML = 'Dark Mode ';
   } else {
-      body.classList.remove('dark-mode');
-      localStorage.setItem('theme', 'light');
-      toggleStatus.innerHTML = 'Light Mode';
+    body.classList.remove('dark-mode');
+    localStorage.setItem('theme', 'light');
+    toggleStatus.innerHTML = 'Light Mode ';
+  }
+
+  // Disable auto-theme if user manually changes theme
+  localStorage.setItem('auto-theme', 'disabled');
+  document.getElementById('auto-theme-toggle').checked = false;
+}
+
+// 🌍 Auto Theme Based on System Settings
+function toggleAutoTheme() {
+  const autoThemeToggle = document.getElementById('auto-theme-toggle');
+  
+  if (autoThemeToggle.checked) {
+    localStorage.setItem('auto-theme', 'enabled');
+    applySystemTheme(); // Apply system theme immediately
+  } else {
+    localStorage.setItem('auto-theme', 'disabled');
   }
 }
 
-// Function to apply saved theme on page load
-function loadTheme() {
+function applySystemTheme() {
   const body = document.body;
   const toggleStatus = document.getElementById('toggle-status');
   const themeToggle = document.getElementById('theme-toggle');
 
-  const theme = localStorage.getItem('theme') || 'light';
-  console.log(theme);
-
-  if (theme === 'dark') { 
+  if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
     body.classList.add('dark-mode');
-    if (themeToggle) themeToggle.checked = true; // ✅ Added null check
-    if (toggleStatus) toggleStatus.textContent = 'Dark Mode'; // ✅ Added null check
-
-    console.log("dark mode enabled");
-
-   
+    localStorage.setItem('theme', 'dark');
+    themeToggle.checked = true;
+    toggleStatus.innerHTML = 'Dark Mode ';
   } else {
-    console.log("light mode enabled");
     body.classList.remove('dark-mode');
-    if (themeToggle) themeToggle.checked = false; // ✅ Added null check
-    if (toggleStatus) toggleStatus.innerHTML = 'Light Mode'; // ✅ Added null check
+    localStorage.setItem('theme', 'light');
+    themeToggle.checked = false;
+    toggleStatus.innerHTML = 'Light Mode ';
   }
-
 }
 
+// 🌟 Load Theme Based on System First, Then User Preference
+function loadTheme() {
+  const autoTheme = localStorage.getItem('auto-theme');
 
-// Load theme when the page loads
-document.addEventListener('DOMContentLoaded', loadTheme);
+  if (autoTheme === null) {
+    // First time: Apply system theme by default
+    applySystemTheme();
+    localStorage.setItem('auto-theme', 'enabled'); // Enable auto theme by default
+    document.getElementById('auto-theme-toggle').checked = true;
+  } else if (autoTheme === 'enabled') {
+    applySystemTheme();
+    document.getElementById('auto-theme-toggle').checked = true;
+  } else {
+    // Apply saved user preference
+    const theme = localStorage.getItem('theme');
+    if (theme === 'dark') {
+      document.body.classList.add('dark-mode');
+      document.getElementById('theme-toggle').checked = true;
+      document.getElementById('toggle-status').innerHTML = 'Dark Mode ';
+    } else {
+      document.body.classList.remove('dark-mode');
+      document.getElementById('theme-toggle').checked = false;
+      document.getElementById('toggle-status').innerHTML = 'Light Mode ';
+    }
+  }
+}
+
+// Load theme and language when the page loads
+document.addEventListener('DOMContentLoaded', () => {
+  loadTheme(); // Auto apply system theme on first load
+});
+
