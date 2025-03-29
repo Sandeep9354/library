@@ -64,14 +64,72 @@ body {
     position: absolute;
     right: 20px;
     top: 13px;
-    z-index: 1050;
     font-size: 24px;
     color: #0056b3;
     cursor: pointer;
     transition: color 0.3s ease;
   }
   
+/* ===== Light Mode ===== */
+#auto-theme-toggle {
+  background-color: #ffffff;
+  color: #163373;
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
 
+.setting-item-option {
+  margin-bottom: 12px;
+}
+
+.setting-item-option label {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #163373;
+}
+
+#auto-theme-toggle {
+  accent-color: #f59e0b;
+  cursor: pointer;
+}
+
+#language-select {
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  color: #163373;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+  outline: none;
+  width: 100%;
+  
+}
+
+#language-select:focus {
+  border-color: #f59e0b;
+}
+
+#auto-theme-toggle{
+  width: 13px !important;
+}
+/* ===== Hover Effects ===== */
+.setting-item-option label:hover {
+  color: #f59e0b;
+}
+
+#language-select:hover {
+  border-color: #f59e0b;
+}
+
+.profile-panel-content {
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 8px;
+  scroll-behavior: smooth;
+}
 
 .profile-icon i {
   font-size: 36px;
