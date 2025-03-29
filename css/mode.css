@@ -74,14 +74,20 @@
   /* Panel Title */
   .panel-title,.panel-title a {
     font-size: 1.5rem;
-    color: #163373 !important;
+    color: #163373 ;
     font-weight: bold;
     margin-bottom: 20px;
     text-align: center;
+    cursor: default;
+  }
+  body.dark-mode .panel-title, body.dark-mode
+ .panel-title a,body.dark-mode .toggle-status,
+  body.dark-mode {
+    color: #BB86FC;
+
   }
   /* Improved Display Setting Section */
 .setting-item-option {
-    display: flex;
     justify-content: space-between;
     padding: 12px 16px;
     border-radius: 12px;
@@ -121,7 +127,7 @@
 
 .toggle-switch label {
     position: absolute;
-    width: 100%;
+    width: 92%;
     height: 100%;
     background-color: #ccc;
     border-radius: 50px;
@@ -176,7 +182,7 @@ body.dark-mode {
   body.dark-mode .navbar-brand {
     color: #BB86FC !important; /* Soft purple */
   }
-  
+
   body.dark-mode .nav-link {
     color: #BB86FC !important;
   }
@@ -242,7 +248,7 @@ body.dark-mode {
   color: #f59e0b; /* Golden Yellow */
 }
 .dark-mode #typing-text-2, .dark-mode #sub-typing-text-2{
-    color: #03DAC6 !important;
+    color: #BB86FC !important;
 }
 /* Cursor Styling */
 .dark-mode #cursor {
@@ -563,14 +569,41 @@ body.dark-mode .nav-link {
   body.dark-mode .close-btn:hover {
     color: #ef4444; /* Brighter Red */
   }
-  
+  /* ===== Dark Mode ===== */
+body.dark-mode #auto-theme-toggle {
+  background-color: #1e293b;
+  color: #f1f5f9;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+body.dark-mode .setting-item-option label {
+  color: #f1f5f9;
+}
+
+body.dark-mode #auto-theme-toggle {
+  accent-color: #f87171;
+}
+
+body.dark-mode #language-select {
+  background-color: #334155;
+  color: #f1f5f9;
+  border-color: #475569;
+}
+
+body.dark-mode #language-select:focus {
+  border-color: #f87171;
+}
+
+body.dark-mode #language-select:hover {
+  border-color: #f87171;
+}
   /* ===== Dark Mode Profile Header ===== */
   body.dark-mode .profile-header h3 {
     color: #fbbf24; /* Amber */
   }
   
   body.dark-mode .profile-header p {
-    color: #94a3b8; /* Light Gray Blue */
+    color: #BB86FC; /* Light Gray Blue */
   }
   
   /* ===== Dark Mode Profile Links ===== */
@@ -587,11 +620,7 @@ body.dark-mode .nav-link {
     background-color: rgba(0, 0, 0, 0.7);
   }
   
-  /* ===== Dark Mode Panel Title ===== */
-  body.dark-mode .panel-title {
-    color: #fbbf24; /* Amber */
-  }
-  
+
   /* ===== Dark Mode Setting Item ===== */
   body.dark-mode .setting-item label {
     color: #fbbf24; /* Amber */
@@ -631,7 +660,7 @@ body.dark-mode .footer {
 
 /* ===== Dark Mode Footer Logo and Description ===== */
 body.dark-mode .footer-logo {
-    color: #f87171; /* Soft Red */
+    color: #BB86FC; /* Soft Red */
 }
 
 body.dark-mode .footer-description {
@@ -682,4 +711,82 @@ body.dark-mode .footer-bottom {
 
 body.dark-mode .footer-bottom p {
     color: #cbd5e1; /* Light Blue Gray */
+}
+
+
+
+
+
+/* Custom Scrollbar Styling */
+.profile-panel-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.profile-panel-content::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 6px;
+}
+
+.profile-panel-content::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+}
+
+.profile-panel-content::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+}
+
+
+
+
+
+
+
+
+/* Common Style for Inputs and Labels */
+body.dark-mode .setting-item-option {
+  margin-bottom: 12px;
+}
+
+body.dark-mode .setting-item-option label {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 500;
+  margin-bottom: 4px;
+  color: #f1f5f9;
+}
+
+body.dark-mode .setting-item-option input,
+body.dark-mode .setting-item-option select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #475569;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  background-color: #334155;
+  color: #f1f5f9;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+body.dark-mode .setting-item-option input:focus,
+body.dark-mode .setting-item-option select:focus {
+  border-color: #f87171;
+}
+
+/* Save Button */
+body.dark-mode .setting-item-option button {
+  background-color: #f87171;
+  color: #1e293b;
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%;
+}
+
+body.dark-mode .setting-item-option button:hover {
+  background-color: #e64c3c;
 }
